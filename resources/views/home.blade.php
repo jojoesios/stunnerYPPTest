@@ -15,55 +15,49 @@
 @endpush
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-body">
-                    <h3>Lyrics List
-                        <button type="button" class="btn btn-success btn-sm float-right" data-toggle="modal" data-target="#createModal">
-                            Create <span class="fa fa-plus"></span>
-                        </button>
-                    </h3>
-
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Title</th>
-                                    <th scope="col">Artist</th>
-                                    <th scope="col">Lyrics</th>
-                                    <th scope="col">Created By</th>
-                                    <th scope="col">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($lyrics as $lyric)
-                                <tr>
-                                    <th scope="row">{{ ucfirst($lyric->title) }}</th>
-                                    <td>{{ ucfirst($lyric->artist) }}</td>
-                                    <td>{{ substr($lyric->lyrics, 0, 50) }}</td>
-                                    <td>{{ $lyric->creator->name }}</td>
-                                    <td>
-                                        <a href="#" class="edit" data-title="{{ $lyric->title }}" data-artist="{{ $lyric->artist }}" data-lyrics="{{ $lyric->lyrics }}" data-id="{{ $lyric->id }}">
-                                            <span class="fa fa-edit blue"></span>
-                                        </a>
-                                        /
-                                        <a href="#" class="delete" data-id="{{ $lyric->id }}">
-                                            <span class="fa fa-trash red"></span>
-                                        </a>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+<div class="container-fluid px-4">
+    <div class="card mb-4">
+        <div class="card-body">
+            <h3>Lyrics List
+                <button type="button" class="btn btn-success btn-sm float-right" data-toggle="modal" data-target="#createModal">
+                    Create <span class="fa fa-plus"></span>
+                </button>
+            </h3>
+            <table id="datatablesSimple">
+                <thead>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Artist</th>
+                        <th scope="col">Lyrics</th>
+                        <th scope="col">Created By</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($lyrics as $lyric)
+                    <tr>
+                        <th scope="row">{{ ucfirst($lyric->title) }}</th>
+                        <td>{{ ucfirst($lyric->artist) }}</td>
+                        <td>{{ substr($lyric->lyrics, 0, 50) }}</td>
+                        <td>{{ $lyric->creator->name }}</td>
+                        <td>
+                            <a href="#" class="edit" data-title="{{ $lyric->title }}" data-artist="{{ $lyric->artist }}" data-lyrics="{{ $lyric->lyrics }}" data-id="{{ $lyric->id }}">
+                                <span class="fa fa-edit blue"></span>
+                            </a>
+                            /
+                            <a href="#" class="delete" data-id="{{ $lyric->id }}">
+                                <span class="fa fa-trash red"></span>
+                            </a>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
-<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+
+<div class="modal fade" id="createModal" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -88,7 +82,7 @@
                         <label>Song Lyrics</label>
                         <textarea class="form-control" id="songLyrics" rows="3"></textarea>
                     </div>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary close-button" data-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary">Save</button>
 
                 </form>
@@ -96,7 +90,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+<div class="modal fade" id="editModal" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -122,7 +116,7 @@
                         <label>Song Lyrics</label>
                         <textarea class="form-control" id="editSongLyrics" rows="3"></textarea>
                     </div>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary close-button" data-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary">Update</button>
 
                 </form>
@@ -145,7 +139,7 @@
                     <div class="form-group">
                         Are you sure you want to delete this lyric?
                     </div>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary close-button" data-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-danger">Delete</button>
 
                 </form>
@@ -159,9 +153,13 @@
 
 <script>
     $(document).ready(function() {
-        $('.table').DataTable({
-            responsive: true,
-        });
+        // $('.table').DataTable({
+        //     responsive: true,
+        // });
+
+        $('.close, .close-button').on('click', function(){
+            $(this).closest('.modal').modal('hide');
+        })
 
         $('.createSong').on('submit', function(e) {
             e.preventDefault();

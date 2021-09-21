@@ -1,5 +1,6 @@
 <?php
 
+use Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,7 +13,11 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    if(!Auth::user()){
+        return view('auth.login');
+    }else{
+        return redirect('/home');
+    }
 });
 
 Auth::routes();

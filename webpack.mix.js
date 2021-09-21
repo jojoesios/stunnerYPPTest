@@ -12,4 +12,8 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+    .js('resources/js/scripts.js', 'public/js')
+    .js('resources/js/datatables-demo.js', 'public/js')
+    .js('resources/js/datatables-simple-demo.js', 'public/js')
+    .sass('resources/sass/app.scss', 'public/css')
+    .postCss('resources/css/styles.css', 'public/css');
