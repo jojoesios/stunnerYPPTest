@@ -1,5 +1,5 @@
 
-## About PRAXXYS Test
+## About StunnerYPP Test
 
 Please use the following frameworks:
     ● Bootstrap 3
